@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Distribuidora Venus – Excelência em Distribuição</title>
+    
+    <!-- Bibliotecas de Animação -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <style>
+        :root {
+            /* Cores Exatas da Logomarca */
+            --magenta: #B40064;
+            --gold: #C5A059;
+            --purple: #3D1E5E;
+            --dark-bg: #050505;
+            --white: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--dark-bg);
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            color: var(--white);
+        }
+
+        /* Fundo Interativo Three.js */
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Conteúdo Central */
+        .content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Geometria Idêntica da Logomarca (V Estilizado) */
+        .logo-symbol {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            filter: drop-shadow(0 0 25px rgba(180, 0, 100, 0.3));
+        }
+
+        .logo-symbol svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .logo-venus {
+            font-size: clamp(3.5rem, 11vw, 6rem);
+            letter-spacing: 18px;
+            text-transform: uppercase;
+            font-weight: 200;
+            margin-bottom: 10px;
+            /* Gradiente de Identidade */
+            background: linear-gradient(to right, var(--magenta), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .tagline {
+            font-size: clamp(0.8rem, 1.8vw, 1rem);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0;
+            transform: translateY(15px);
+            font-weight: 300;
+        }
+
+        /* Botão CTA Centralizado */
+        .nav-footer {
+            position: absolute;
+            bottom: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        .nav-item-cta {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            padding: 18px 50px;
+            border: 1px solid var(--magenta);
+            border-radius: 50px;
+            background: rgba(180, 0, 100, 0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .nav-item-cta:hover {
+            background: linear-gradient(45deg, var(--magenta), var(--purple));
+            border-color: var(--gold);
+            box-shadow: 0 10px 40px rgba(180, 0, 100, 0.4);
+            transform: scale(1.08) translateY(-5px);
+            letter-spacing: 5px;
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div style="border-bottom: 1px solid var(--gold); padding: 10px 30px; letter-spacing: 4px; font-size: 0.75rem; color: var(--gold);">DISTRIBUIDORA VENUS</div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <main class="content">
+        <div class="logo-container">
+            <!-- SVG Ajustado: Adicionado o detalhe da ponta na parte amarela -->
+            <div class="logo-symbol" id="logo-v">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="goldMetalic" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#F9E29C" />
+                            <stop offset="100%" stop-color="#C5A059" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Parte Magenta: Haste Esquerda -->
+                    <path d="M15,20 L50,90 L50,45 Z" fill="#B40064" />
+                    
+                    <!-- Parte Roxo Escuro: Intersecção/Base Direita -->
+                    <path d="M50,90 L85,45 L50,45 Z" fill="#3D1E5E" />
+                    
+                    <!-- Parte Ouro: Topo Direito com a ponta característica (Trapezóide angulado) -->
+                    <path d="M50,20 L100,20 L85,45 L50,45 Z" fill="url(#goldMetalic)" />
+                </svg>
+            </div>
+            
+            <h1 class="logo-venus" id="main-title">Venus</h1>
+            <p class="tagline" id="main-tagline">Distribuição em Alto Padrão</p>
+        </div>
+    </main>
+
+    <footer class="nav-footer">
+        <a href="https://lista.mercadolivre.com.br/pagina/hadebcfgh43368/#label=Productos+recomendados&component=tab-0&tracking_id=9eaea3b5-b219-4752-89d9-4c1f51284f11&global_position=11" 
+           class="nav-item-cta" 
+           id="cta-button"
+           target="_blank">
+           Ver Produtos
+        </a>
+    </footer>
+
+    <script>
+        // Configuração de Fundo Galáctico
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), antialias: true, alpha: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const count = 7500;
+        const positions = new Float32Array(count * 3);
+        const colors = new Float32Array(count * 3);
+
+        for(let i = 0; i < count; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 15;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 15;
+
+            const isGold = Math.random() > 0.65;
+            colors[i * 3] = isGold ? 0.77 : 0.70;
+            colors[i * 3 + 1] = isGold ? 0.62 : 0.00;
+            colors[i * 3 + 2] = isGold ? 0.35 : 0.39;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.012,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.5,
+            blending: THREE.AdditiveBlending
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 5;
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.0006;
+            particlesMesh.position.x += (mouseX - particlesMesh.position.x) * 0.02;
+            particlesMesh.position.y += (-mouseY - particlesMesh.position.y) * 0.02;
+            renderer.render(scene, camera);
+        }
+
+        window.onload = () => {
+            const tl = gsap.timeline();
+
+            gsap.to("#loader", { duration: 1.2, opacity: 0, onComplete: () => {
+                document.getElementById('loader').style.display = 'none';
+            }});
+
+            tl.to("#logo-v", { duration: 1.5, opacity: 1, y: 0, ease: "expo.out", delay: 0.5 })
+              .to("#main-title", { duration: 1.5, opacity: 1, y: 0, ease: "power4.out" }, "-=1")
+              .to("#main-tagline", { duration: 1.2, opacity: 1, y: 0, ease: "power4.out" }, "-=1.2")
+              .to("#cta-button", { duration: 1, opacity: 1, y: 0, ease: "back.out(1.5)" }, "-=0.5");
+            
+            animate();
+        };
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
