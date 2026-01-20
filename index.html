@@ -12,12 +12,16 @@
 
     <style>
         :root {
-            /* Cores Exatas da Logomarca */
             --magenta: #B40064;
             --gold: #C5A059;
             --purple: #3D1E5E;
             --dark-bg: #050505;
             --white: #ffffff;
+            
+            /* Cores de Hover Marketplace */
+            --ml-main: #FFE600;
+            --ml-dark: #2D3277;
+            --shopee-main: #EE4D2D;
         }
 
         body, html {
@@ -27,11 +31,10 @@
             height: 100%;
             overflow: hidden;
             background-color: var(--dark-bg);
-            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             color: var(--white);
         }
 
-        /* Fundo Interativo Three.js */
         #bg-canvas {
             position: absolute;
             top: 0;
@@ -39,7 +42,6 @@
             z-index: 0;
         }
 
-        /* Conteúdo Central */
         .content {
             position: relative;
             z-index: 10;
@@ -57,31 +59,24 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            margin-top: -60px;
         }
 
-        /* Geometria Idêntica da Logomarca (V Estilizado) */
         .logo-symbol {
-            width: 140px;
-            height: 140px;
-            margin-bottom: 20px;
+            width: 110px;
+            height: 110px;
+            margin-bottom: 25px;
             opacity: 0;
             transform: translateY(30px);
-            filter: drop-shadow(0 0 25px rgba(180, 0, 100, 0.3));
-        }
-
-        .logo-symbol svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
+            filter: drop-shadow(0 0 20px rgba(180, 0, 100, 0.2));
         }
 
         .logo-venus {
-            font-size: clamp(3.5rem, 11vw, 6rem);
-            letter-spacing: 18px;
+            font-size: clamp(2.8rem, 10vw, 5rem);
+            letter-spacing: 20px;
             text-transform: uppercase;
             font-weight: 200;
-            margin-bottom: 10px;
-            /* Gradiente de Identidade */
+            margin: 0;
             background: linear-gradient(to right, var(--magenta), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -90,57 +85,105 @@
         }
 
         .tagline {
-            font-size: clamp(0.8rem, 1.8vw, 1rem);
-            letter-spacing: 6px;
+            font-size: clamp(0.65rem, 1.4vw, 0.85rem);
+            letter-spacing: 7px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: rgba(255, 255, 255, 0.4);
             opacity: 0;
             transform: translateY(15px);
             font-weight: 300;
+            margin-top: 15px;
         }
 
-        /* Botão CTA Centralizado */
+        /* Footer e Botões */
         .nav-footer {
             position: absolute;
-            bottom: 60px;
+            bottom: 45px;
             width: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
             z-index: 20;
             pointer-events: auto;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
-        .nav-item-cta {
-            color: var(--white);
+        @media (min-width: 768px) {
+            .nav-footer {
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+            }
+        }
+
+        /* Base do Botão com cor leve */
+        .btn-market {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            padding: 18px 50px;
-            border: 1px solid var(--magenta);
-            border-radius: 50px;
-            background: rgba(180, 0, 100, 0.05);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            letter-spacing: 2px;
+            padding: 14px 24px;
+            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             opacity: 0;
             transform: translateY(20px);
+            min-width: 270px;
+            backdrop-filter: blur(8px);
+            border: 1px solid transparent;
         }
 
-        .nav-item-cta:hover {
-            background: linear-gradient(45deg, var(--magenta), var(--purple));
-            border-color: var(--gold);
-            box-shadow: 0 10px 40px rgba(180, 0, 100, 0.4);
-            transform: scale(1.08) translateY(-5px);
-            letter-spacing: 5px;
+        .btn-market svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            transition: transform 0.4s ease;
         }
 
-        /* Loader */
+        /* Mercado Livre */
+        .btn-ml {
+            background: rgba(255, 230, 0, 0.08);
+            border-color: rgba(255, 230, 0, 0.2);
+            color: rgba(255, 230, 0, 0.9);
+        }
+
+        .btn-ml:hover, .btn-ml:active {
+            background: var(--ml-main);
+            border-color: var(--ml-main);
+            color: var(--ml-dark);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(255, 230, 0, 0.3);
+        }
+
+        /* Shopee */
+        .btn-shopee {
+            background: rgba(238, 77, 45, 0.08);
+            border-color: rgba(238, 77, 45, 0.2);
+            color: rgba(238, 77, 45, 0.9);
+        }
+
+        .btn-shopee:hover, .btn-shopee:active {
+            background: var(--shopee-main);
+            border-color: var(--shopee-main);
+            color: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(238, 77, 45, 0.3);
+        }
+
+        .btn-market:hover svg {
+            transform: scale(1.1);
+        }
+
         #loader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: #000;
             display: flex;
             justify-content: center;
@@ -151,15 +194,15 @@
 </head>
 <body>
 
+    <!-- Loader atualizado conforme solicitado -->
     <div id="loader">
-        <div style="border-bottom: 1px solid var(--gold); padding: 10px 30px; letter-spacing: 4px; font-size: 0.75rem; color: var(--gold);">DISTRIBUIDORA VENUS</div>
+        <div style="border-bottom: 1px solid var(--gold); padding: 10px 30px; letter-spacing: 5px; font-size: 0.65rem; color: var(--gold); font-weight: 300;">VENUS DISTRIBUIDORA</div>
     </div>
 
     <canvas id="bg-canvas"></canvas>
 
     <main class="content">
         <div class="logo-container">
-            <!-- SVG Ajustado: Adicionado o detalhe da ponta na parte amarela -->
             <div class="logo-symbol" id="logo-v">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -168,33 +211,38 @@
                             <stop offset="100%" stop-color="#C5A059" />
                         </linearGradient>
                     </defs>
-                    <!-- Parte Magenta: Haste Esquerda -->
                     <path d="M15,20 L50,90 L50,45 Z" fill="#B40064" />
-                    
-                    <!-- Parte Roxo Escuro: Intersecção/Base Direita -->
                     <path d="M50,90 L85,45 L50,45 Z" fill="#3D1E5E" />
-                    
-                    <!-- Parte Ouro: Topo Direito com a ponta característica (Trapezóide angulado) -->
                     <path d="M50,20 L100,20 L85,45 L50,45 Z" fill="url(#goldMetalic)" />
                 </svg>
             </div>
             
             <h1 class="logo-venus" id="main-title">Venus</h1>
-            <p class="tagline" id="main-tagline">Distribuição em Alto Padrão</p>
+            <p class="tagline" id="main-tagline">Distribuição de Alto Padrão</p>
         </div>
     </main>
 
     <footer class="nav-footer">
         <a href="https://lista.mercadolivre.com.br/pagina/hadebcfgh43368/#label=Productos+recomendados&component=tab-0&tracking_id=9eaea3b5-b219-4752-89d9-4c1f51284f11&global_position=11" 
-           class="nav-item-cta" 
-           id="cta-button"
+           class="btn-market btn-ml" 
            target="_blank">
-           Ver Produtos
+            <svg viewBox="0 0 32 32">
+                <path d="M28.4,13.8c-0.3-0.3-0.8-0.3-1.1,0l-5.1,5.1c-0.2,0.2-0.5,0.2-0.7,0l-1.3-1.3c-0.3-0.3-0.8-0.3-1.1,0L13.5,23.1 c-0.3,0.3-0.3,0.8,0,1.1c0.3,0.3,0.8,0.3,1.1,0l5.1-5.1c0.2-0.2,0.5-0.2,0.7,0l1.3,1.3c0.3,0.3,0.8,0.3,1.1,0l5.6-5.6 C28.7,14.5,28.7,14,28.4,13.8z M10.4,17.1c-0.6,0-1.1,0.5-1.1,1.1s0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1S11,17.1,10.4,17.1z M5,18.1 c0,0.6,0.5,1.1,1.1,1.1c0.6,0,1.1-0.5,1.1-1.1s-0.5-1.1-1.1-1.1C5.5,17,5,17.5,5,18.1z M11,11c0-1.7-1.3-3-3-3S5,9.3,5,11 s1.3,3,3,3S11,12.7,11,11z"/>
+            </svg>
+            Comprar no Mercado Livre
+        </a>
+
+        <a href="https://shopee.com.br/venusdistribuidoraltda#product_list" 
+           class="btn-market btn-shopee" 
+           target="_blank">
+            <svg viewBox="0 0 32 32">
+                <path d="M24,10h-2c0-3.3-2.7-6-6-6s-6,2.7-6,6H8c-1.1,0-2,0.9-2,2v14c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V12 C26,10.9,25.1,10,24,10z M16,6c2.2,0,4,1.8,4,4h-8C12,7.8,13.8,6,16,6z M19.4,22.2c-0.5,0.6-1.2,1-2.1,1.2c-0.3,0.1-0.6,0.1-0.9,0.1 c-0.7,0-1.3-0.1-1.9-0.4c-0.8-0.4-1.3-1.1-1.3-2c0-0.4,0.1-0.7,0.4-1s0.6-0.4,1-0.4c0.4,0,0.7,0.1,1,0.4c0.2,0.2,0.3,0.5,0.3,0.8 c0,0.5,0.3,0.7,0.8,0.7c0.4,0,0.7-0.2,0.8-0.6c0.1-0.2,0.1-0.4,0.1-0.5c0-0.6-0.4-1-1.1-1.3l-1.1-0.4c-1.5-0.5-2.2-1.6-2.2-2.9 c0-1,0.4-1.8,1.2-2.5c0.8-0.6,1.8-1,3-1c0.3,0,0.6,0,0.9,0.1c0.9,0.2,1.7,0.6,2.2,1.3c0.3,0.3,0.4,0.7,0.4,1c0,0.4-0.1,0.7-0.4,1 c-0.3,0.3-0.6,0.4-1,0.4c-0.4,0-0.7-0.1-1-0.4c-0.2-0.2-0.3-0.4-0.3-0.7c0-0.5-0.3-0.7-0.7-0.7c-0.4,0-0.7,0.2-0.8,0.5 c0,0.1,0,0.2,0,0.4c0,0.6,0.4,1,1.1,1.3l1.1,0.4c1.5,0.5,2.2,1.6,2.2,2.9C21,20.5,20.4,21.5,19.4,22.2z"/>
+            </svg>
+            Comprar na Shopee
         </a>
     </footer>
 
     <script>
-        // Configuração de Fundo Galáctico
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), antialias: true, alpha: true });
@@ -203,7 +251,7 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const particlesGeometry = new THREE.BufferGeometry();
-        const count = 7500;
+        const count = 8000;
         const positions = new Float32Array(count * 3);
         const colors = new Float32Array(count * 3);
 
@@ -212,7 +260,7 @@
             positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
             positions[i * 3 + 2] = (Math.random() - 0.5) * 15;
 
-            const isGold = Math.random() > 0.65;
+            const isGold = Math.random() > 0.7;
             colors[i * 3] = isGold ? 0.77 : 0.70;
             colors[i * 3 + 1] = isGold ? 0.62 : 0.00;
             colors[i * 3 + 2] = isGold ? 0.35 : 0.39;
@@ -222,10 +270,10 @@
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.012,
+            size: 0.01,
             vertexColors: true,
             transparent: true,
-            opacity: 0.5,
+            opacity: 0.3,
             blending: THREE.AdditiveBlending
         });
 
@@ -234,17 +282,16 @@
 
         camera.position.z = 5;
 
-        let mouseX = 0;
-        let mouseY = 0;
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
-            mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 1.5;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 1.5;
         });
 
         function animate() {
             requestAnimationFrame(animate);
-            particlesMesh.rotation.y += 0.0006;
+            particlesMesh.rotation.y += 0.0003;
+            particlesMesh.rotation.x += 0.0001;
             particlesMesh.position.x += (mouseX - particlesMesh.position.x) * 0.02;
             particlesMesh.position.y += (-mouseY - particlesMesh.position.y) * 0.02;
             renderer.render(scene, camera);
@@ -253,14 +300,14 @@
         window.onload = () => {
             const tl = gsap.timeline();
 
-            gsap.to("#loader", { duration: 1.2, opacity: 0, onComplete: () => {
+            gsap.to("#loader", { duration: 1, opacity: 0, delay: 0.5, onComplete: () => {
                 document.getElementById('loader').style.display = 'none';
             }});
 
-            tl.to("#logo-v", { duration: 1.5, opacity: 1, y: 0, ease: "expo.out", delay: 0.5 })
-              .to("#main-title", { duration: 1.5, opacity: 1, y: 0, ease: "power4.out" }, "-=1")
-              .to("#main-tagline", { duration: 1.2, opacity: 1, y: 0, ease: "power4.out" }, "-=1.2")
-              .to("#cta-button", { duration: 1, opacity: 1, y: 0, ease: "back.out(1.5)" }, "-=0.5");
+            tl.to("#logo-v", { duration: 1.8, opacity: 1, y: 0, ease: "expo.out", delay: 0.6 })
+              .to("#main-title", { duration: 1.5, opacity: 1, y: 0, ease: "power4.out" }, "-=1.3")
+              .to("#main-tagline", { duration: 1.2, opacity: 1, y: 0, ease: "power4.out" }, "-=1.1")
+              .to(".btn-market", { duration: 1.2, opacity: 1, y: 0, stagger: 0.2, ease: "power2.out" }, "-=0.6");
             
             animate();
         };
