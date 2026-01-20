@@ -18,11 +18,9 @@
 
     <style>
         :root {
-            /* Retorno às cores originais e ajuste do laranja */
             --magenta: #B40064;
             --gold: #C5A059;
             --purple: #3D1E5E;
-            --soft-orange: #d17b1f; /* Laranja mais fraco/suave */
             --dark-bg: #050505;
             --white: #ffffff;
             
@@ -70,13 +68,25 @@
             margin-top: -60px;
         }
 
+        /* Estilo para recortar o texto da imagem e manter apenas o desenho */
         .logo-symbol {
-            width: 110px;
-            height: 110px;
+            width: 130px;
+            height: 110px; /* Altura reduzida para cortar o texto inferior */
             margin-bottom: 25px;
             opacity: 0;
             transform: translateY(30px);
             filter: drop-shadow(0 0 25px rgba(180, 0, 100, 0.35));
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinha ao topo para pegar o ícone */
+            overflow: hidden; /* Faz o recorte */
+        }
+
+        .logo-symbol img {
+            width: 135%; /* Amplia para focar no ícone e remover as bordas com texto */
+            height: auto;
+            object-fit: contain;
+            margin-top: -5px; /* Ajuste fino para centralizar o desenho no corte */
         }
 
         .logo-venus {
@@ -203,14 +213,8 @@
     <main class="content">
         <div class="logo-container">
             <div class="logo-symbol" id="logo-v">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Rosa Original: #B40064 -->
-                    <path d="M15,20 L50,90 L50,45 Z" fill="#B40064" />
-                    <!-- Roxo Original: #3D1E5E -->
-                    <path d="M50,90 L85,45 L50,45 Z" fill="#3D1E5E" />
-                    <!-- Laranja Suavizado: #d17b1f -->
-                    <path d="M50,20 L100,20 L85,45 L50,45 Z" fill="#d17b1f" />
-                </svg>
+                <!-- Nova imagem aplicada com recorte via CSS -->
+                <img src="https://i.imgur.com/JrXjE2O.png" alt="Desenho Logo Venus">
             </div>
             
             <h1 class="logo-venus" id="main-title">Venus</h1>
